@@ -69,7 +69,6 @@ public class TriggeredObject : MonoBehaviour
                 }
                 else
                 {
-                    print(timer);
                     Halt();
                 }
             }

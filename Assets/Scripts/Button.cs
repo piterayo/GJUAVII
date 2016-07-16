@@ -18,7 +18,7 @@ public class Button : MonoBehaviour {
 
     void Start()
     {
-        switchState(state);
+
     }
 
     void OnTriggerEnter2D(Collider2D other){

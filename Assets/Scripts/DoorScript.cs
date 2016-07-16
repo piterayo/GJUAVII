@@ -22,6 +22,8 @@ public class DoorScript : MonoBehaviour
 
         speed = verticalMovement / openTime;
 
+        print(speed);
+
         closePosition = openPosition = transform.position;
         closePosition.y += verticalMovement;
 
@@ -35,12 +37,12 @@ public class DoorScript : MonoBehaviour
             if (trigger.State == TriggerState.ACTIVE_A)
             {
                 transform.position += new Vector3(0, speed * Time.deltaTime, 0);
-                if ((transform.position - closePosition).sqrMagnitude < 0.01f) trigger.Halt();
+                if ((transform.position - closePosition).sqrMagnitude < 0.005f) trigger.Halt();
             }
             else if (trigger.State == TriggerState.ACTIVE_B)
             {
                 transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
-                if ((transform.position - openPosition).sqrMagnitude < 0.01f) trigger.Halt();
+                if ((transform.position - openPosition).sqrMagnitude < 0.005f) trigger.Halt();
             }
         }
     }
