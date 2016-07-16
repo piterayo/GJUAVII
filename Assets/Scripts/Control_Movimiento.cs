@@ -90,7 +90,6 @@ public class Control_Movimiento : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D Collider)
 	{
-		print (Collider.transform.name);
 
 
 		if (Collider.transform.name == "Altar") {

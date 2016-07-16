@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum TriggerState
-{
-    IDLE_A, ACTIVE_A, IDLE_B, ACTIVE_B 
-}
-
-public class TriggeredObject : MonoBehaviour
+public class TriggeredObject : Triggerer
 {
 
     private float timer = 0.0f;
-    private TriggerState state = TriggerState.IDLE_A;
     private float endTime = -1.0f;
 
 
@@ -27,12 +21,7 @@ public class TriggeredObject : MonoBehaviour
         get { return timer; }
     }
 
-    public TriggerState State
-    {
-        get { return state; }
-    }
-
-    public void ActionA()
+    override public void ActionA()
     {
         if (state != TriggerState.IDLE_B)
         {
@@ -41,7 +30,7 @@ public class TriggeredObject : MonoBehaviour
         }
     }
 
-    public void ActionB()
+    override public void ActionB()
     {
         if (state != TriggerState.IDLE_A)
         {
