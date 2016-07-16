@@ -1,32 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(ScriptedPath))]
 public class DoorScript : MonoBehaviour
 {
 
+    private ScriptedPath path;
 
     public float openTime = 1.0f;
 
-    public float verticalMovement = 2.0f;
-
-    private Vector3 closePosition;
-    private Vector3 openPosition;
-
     private TriggeredObject trigger;
-    private float speed;
 
     // Use this for initialization
     void Start()
     {
         trigger = GetComponent<TriggeredObject>();
-
-        speed = verticalMovement / openTime;
-
-        print(speed);
-
-        closePosition = openPosition = transform.position;
-        closePosition.y += verticalMovement;
-
+        path = GetComponent<ScriptedPath>();
+        path.time = openTime;
+        path.Target = transform.GetChild(0).transform;
+        path.StartPath();
+        path.PausePath();
     }
 
     // Update is called once per frame
@@ -36,13 +29,25 @@ public class DoorScript : MonoBehaviour
         {
             if (trigger.State == TriggerState.ACTIVE_A)
             {
-                transform.position += new Vector3(0, speed * Time.deltaTime, 0);
-                if ((transform.position - closePosition).sqrMagnitude < 0.005f) trigger.Halt();
+                if (path.AtStart)
+                {
+                    path.ContinuePath();
+                }
+                else if (!path.isForward)
+                {
+                    path.Reverse();
+                }
             }
             else if (trigger.State == TriggerState.ACTIVE_B)
             {
-                transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
-                if ((transform.position - openPosition).sqrMagnitude < 0.005f) trigger.Halt();
+                if (path.AtEnd)
+                {
+                    path.ContinuePath();
+                }
+                else if(path.isForward)
+                {
+                    path.Reverse();
+                }
             }
         }
     }

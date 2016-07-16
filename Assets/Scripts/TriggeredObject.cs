@@ -34,14 +34,20 @@ public class TriggeredObject : MonoBehaviour
 
     public void ActionA()
     {
-        timer = 0.0f;
-        state = TriggerState.ACTIVE_A;
+        if (state != TriggerState.IDLE_B)
+        {
+            timer = 0.0f;
+            state = TriggerState.ACTIVE_A;
+        }
     }
 
     public void ActionB()
     {
-        timer = 0.0f;
-        state = TriggerState.ACTIVE_B;
+        if (state != TriggerState.IDLE_A)
+        {
+            timer = 0.0f;
+            state = TriggerState.ACTIVE_B;
+        }
     }
 
     public void Halt()

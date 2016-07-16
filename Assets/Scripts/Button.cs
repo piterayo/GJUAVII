@@ -32,6 +32,18 @@ public class Button : MonoBehaviour {
         }
     }
 
+    void OnTriggerStay2D(Collider2D other)
+    {
+        foreach (string s in Tags)
+        {
+            if (other.tag == s)
+            {
+                switchState(ButtonState.ON_STATE);
+                break;
+            }
+        }
+    }
+
     void OnTriggerExit2D(Collider2D other)
     {
         foreach (string s in Tags)
@@ -61,5 +73,4 @@ public class Button : MonoBehaviour {
             }
         }
     }
-
 }
