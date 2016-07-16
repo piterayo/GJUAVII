@@ -6,6 +6,7 @@ public class Control_Movimiento : MonoBehaviour {
 	public float maxSpeed = 10f;
 	public float AlturaSalto = 10f;
 	public int powerUp = 0; // 0 NO HAY - 1 ROCA - ETC
+	bool powerUpActivo = false;
 	bool facingRight = true;
 	Animator anim;
 
@@ -20,8 +21,22 @@ public class Control_Movimiento : MonoBehaviour {
 	}
 
 	void Update() {
-		float move = Input.GetAxis("MovimientoHorizontal"+transform.name.ToString());
-		anim.SetFloat ("Speed", Mathf.Abs (move));
+
+		if (!powerUpActivo) {
+			float move = Input.GetAxis("MovimientoHorizontal"+transform.name);
+			anim.SetFloat ("Speed", Mathf.Abs (move));
+
+			if(grounded && Input.GetButton("Salto"+transform.name))
+				rigidBody.velocity = new Vector2 (rigidBody.velocity.x, AlturaSalto);
+
+			rigidBody.velocity = new Vector2 (move * maxSpeed, rigidBody.velocity.y);
+
+			if (move > 0 && !facingRight)
+				Flip ();
+			else if(move <0 && facingRight)
+				Flip();
+
+		}
 
 		if (GetComponentInChildren<colisionSuelo> ().isGrounded ()) {
 			grounded = true;
@@ -30,20 +45,28 @@ public class Control_Movimiento : MonoBehaviour {
 			grounded = false;
 		}
 
-		if(grounded && Input.GetButton("Salto"+transform.name.ToString()))
-			rigidBody.velocity = new Vector2 (rigidBody.velocity.x, AlturaSalto);
 
 		switch (powerUp) {
-		case 0: // No lleva power up
-			GetComponentInChildren<ControlRoca>().disableAll();
+		case 0: // no llevo nada
+			GetComponentInChildren<Control_Skill>().disableAll();
 
 			break;
 		case 1: // Lleva DA ROCK
-			GetComponentInChildren<ControlRoca>().enableAll();
+			if (Input.GetButtonDown ("Skill" + transform.name)) {
+				if (!powerUpActivo) {
+					
+					GetComponentInChildren<Control_Skill> ().enableAll ();
+					powerUpActivo = true;
 
+				} else {
+					GetComponentInChildren<Control_Skill> ().disableAll ();
+					powerUpActivo = false;
+				}
+			}
 			break;
 
 		}
+
 
 
 	}
@@ -52,16 +75,7 @@ public class Control_Movimiento : MonoBehaviour {
 
 		//float move = Input.GetAxis ("Horizontal");
 
-		float move = Input.GetAxis("MovimientoHorizontal"+transform.name.ToString());
 
-		anim.SetFloat ("Speed", Mathf.Abs (move));
-
-		rigidBody.velocity = new Vector2 (move * maxSpeed, rigidBody.velocity.y);
-	
-		if (move > 0 && !facingRight)
-			Flip ();
-		else if(move <0 && facingRight)
-			Flip();
 	
 	}
 
@@ -74,15 +88,20 @@ public class Control_Movimiento : MonoBehaviour {
 		transform.localScale = theScale;
 	}
 
-	void OnCollisionEnter2D(Collision2D Colision)
+	void OnTriggerEnter2D(Collider2D Collider)
 	{
-		print (Colision.transform.name);
+		print (Collider.transform.name);
 
 
-		if (Colision.transform.name == "rock")
-			powerUp = 1;
+		if (Collider.transform.name == "Altar") {
+			print ("LOL");
 
-
+			if (Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP () != 0) {
+				int temp = powerUp;
+				powerUp = Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP ();
+				Collider.gameObject.GetComponent<Control_Altar> ().setPowerUP (temp);
+			}
+		}
 	}
 
 

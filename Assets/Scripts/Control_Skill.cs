@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ControlRoca : MonoBehaviour {
+public class Control_Skill : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
