@@ -15,7 +15,7 @@ public class colisionSuelo : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter2D(Collision2D colision){
+	void OnCollisionStay2D(Collision2D colision){
 		grounded = true;
 			
 	

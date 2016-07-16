@@ -59,7 +59,7 @@ public class ScriptedPath : MonoBehaviour
 
     private BezierCurve curve;
 
-    private Behaviour[] targetComponents;
+    private MonoBehaviour[] targetComponents;
 
     // Use this for initialization
     void Start()
@@ -131,9 +131,9 @@ public class ScriptedPath : MonoBehaviour
 
             if (targetComponents != null)
             {
-                foreach (Behaviour c in targetComponents)
+                foreach (MonoBehaviour c in targetComponents)
                 {
-                    c.enabled = true;
+                     c.enabled = true;
                 }
             }
             targetComponents = null;
@@ -166,9 +166,9 @@ public class ScriptedPath : MonoBehaviour
             rigid.angularVelocity = 0f;
         }
         getTargetComponents();
-        foreach (Behaviour c in targetComponents)
+        foreach (MonoBehaviour c in targetComponents)
         {
-            c.enabled = false;
+                c.enabled = false;
         }
         percent = 0.0f;
         active = true;
@@ -178,7 +178,7 @@ public class ScriptedPath : MonoBehaviour
     {
         if (target != null)
         {
-            targetComponents = target.GetComponents<Behaviour>();
+            targetComponents = target.GetComponents<MonoBehaviour>();
         }
     }
 
