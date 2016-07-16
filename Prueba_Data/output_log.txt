@@ -16,7 +16,7 @@ Platform assembly: C:\Users\minin\Documents\GJUAVII\Prueba_Data\Managed\UnityEng
 Loading C:\Users\minin\Documents\GJUAVII\Prueba_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\minin\Documents\GJUAVII\Prueba_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\minin\Documents\GJUAVII\Prueba_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.171 seconds
+- Completed reload, in  0.050 seconds
 Platform assembly: C:\Users\minin\Documents\GJUAVII\Prueba_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\minin\Documents\GJUAVII\Prueba_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
@@ -27,20 +27,47 @@ desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
  
 (Filename:  Line: 54)
 
+<RI.Hid> Failed to create device file:
+ 2 El sistema no puede encontrar el archivo especificado.
+
+ 
+(Filename:  Line: 54)
+
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.542611 ms
+UnloadTime: 0.507806 ms
 NullReferenceException: Object reference not set to an instance of an object
   at mainMenu.Start () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: e7c -> priority: 1 
-  Thread -> id: 528 -> priority: 1 
+  Thread -> id: e88 -> priority: 1 
+  Thread -> id: 12cc -> priority: 1 
 Unloading the last scene Assets/Scenes/mainMenu.unity(build index: 0), is not supported. Please use SceneManager.LoadScene()/EditorSceneManager.OpenScene() to switch to another scene.
  
 (Filename:  Line: 127)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.333302 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 337.
+Total: 0.229360 ms (FindLiveObjects: 0.047746 ms CreateObjectMapping: 0.033020 ms MarkObjects: 0.131190 ms  DeleteObjects: 0.016064 ms)
+
+Unloading the last scene Assets/Scenes/Levels/Tutorial1.unity(build index: 1), is not supported. Please use SceneManager.LoadScene()/EditorSceneManager.OpenScene() to switch to another scene.
+ 
+(Filename:  Line: 127)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.478801 ms
+
+Unloading 51 unused Assets to reduce memory usage. Loaded Objects now: 265.
+Total: 0.360551 ms (FindLiveObjects: 0.033913 ms CreateObjectMapping: 0.041945 ms MarkObjects: 0.193662 ms  DeleteObjects: 0.090137 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at mainMenu.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
 
 NullReferenceException: Object reference not set to an instance of an object
   at mainMenu.openQuitMenu () [0x00000] in <filename unknown>:0 

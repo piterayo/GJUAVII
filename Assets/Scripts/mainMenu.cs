@@ -36,7 +36,7 @@ public class mainMenu : MonoBehaviour {
 
 	public void StartGame() {
 		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
-		SceneManager.LoadScene("Prueba");
+		SceneManager.LoadScene(1);
 	}
 
 	public void ExitGame()	{

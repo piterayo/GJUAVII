@@ -93,7 +93,8 @@ public class Control_Movimiento : MonoBehaviour {
 		print (Collider.transform.name);
 
 
-		if (Collider.transform.name == "Altar") {
+		switch(Collider.transform.name) {
+		case "Altar":
 			print ("LOL");
 
 			if (Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP () != 0) {
@@ -101,6 +102,10 @@ public class Control_Movimiento : MonoBehaviour {
 				powerUp = Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP ();
 				Collider.gameObject.GetComponent<Control_Altar> ().setPowerUP (temp);
 			}
+			break;
+		case "Salida":
+			Collider.gameObject.GetComponent<ControlSalida> ().LoadNextLevel ();
+			break;
 		}
 	}
 
