@@ -35,14 +35,14 @@ public class Button : MonoBehaviour {
         {
             foreach (TriggeredObject t in target)
             {
-                t.Activate();
+                t.ActionA();
             }
         }
         else
         {
             foreach (TriggeredObject t in target)
             {
-                t.Deactivate();
+                t.ActionB();
             }
         }
     }

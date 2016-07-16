@@ -1,40 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoorScript : MonoBehaviour {
+public class DoorScript : MonoBehaviour
+{
 
 
     public float openTime = 1.0f;
 
+    public float verticalMovement = 2.0f;
 
-    public Transform closePosition;
-    public Transform openPosition;
+    private Vector3 closePosition;
+    private Vector3 openPosition;
 
     private TriggeredObject trigger;
+    private float speed;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         trigger = GetComponent<TriggeredObject>();
-	}
-	
-	// Update is called once per frame
+
+        speed = verticalMovement / openTime;
+
+        closePosition = openPosition = transform.position;
+        closePosition.y += verticalMovement;
+
+    }
+
+    // Update is called once per frame
     void Update()
     {
         if (trigger != null)
         {
-            if (trigger.Timer< openTime)
+            if (trigger.State == TriggerState.ACTIVE_A)
             {
-                print("LLEGA");//TODO Arreglar para que vaya por tiempo
-                if (trigger.State)
-                {
-                    transform.position=Vector3.Lerp(transform.position, openPosition.position, 0.1f);
-                }
-                else
-                {
-                    transform.position=Vector3.Lerp(transform.position, closePosition.position, 0.2f);
-                }
+                transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+                if ((transform.position - closePosition).sqrMagnitude < 0.01f) trigger.Halt();
+            }
+            else if (trigger.State == TriggerState.ACTIVE_B)
+            {
+                transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
+                if ((transform.position - openPosition).sqrMagnitude < 0.01f) trigger.Halt();
             }
         }
-	}
-    
+    }
+
 }
