@@ -13,6 +13,7 @@ public class TriggeredObject : MonoBehaviour
     private TriggerState state = TriggerState.IDLE_A;
     private float endTime = -1.0f;
 
+
     public float EndTime
     {
         set

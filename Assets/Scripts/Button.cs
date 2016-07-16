@@ -14,6 +14,7 @@ public class Button : MonoBehaviour {
 
     public TriggeredObject[] target;
 
+    public string[] Tags;
 
     void Start()
     {
@@ -21,12 +22,26 @@ public class Button : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other){
-        switchState(ButtonState.ON_STATE);
+        foreach (string s in Tags)
+        {
+            if (other.tag == s)
+            {
+                switchState(ButtonState.ON_STATE);
+                break;
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        switchState(ButtonState.OFF_STATE);
+        foreach (string s in Tags)
+        {
+            if (other.tag == s)
+            {
+                switchState(ButtonState.OFF_STATE);
+                break;
+            }
+        }
     }
 
     private void switchState(ButtonState new_state){
