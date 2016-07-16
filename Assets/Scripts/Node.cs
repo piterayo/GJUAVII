@@ -13,10 +13,9 @@ public class Node<T> {
         children = new ArrayList();
     }
 
-    public Node(Node<T> parent)
+    public Node(T data)
     {
-        this.parent = parent;
-        children = new ArrayList();
+        this.data = data;
     }
 
     public Node<T> Parent
@@ -48,6 +47,11 @@ public class Node<T> {
     {
         get { return data; }
         set { data = value; }
+    }
+
+    public int ChildCount
+    {
+        get { return children.Count; }
     }
 
 }
