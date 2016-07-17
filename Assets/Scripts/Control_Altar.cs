@@ -14,4 +14,12 @@ public class Control_Altar : MonoBehaviour
 
     public PlayerState PowerUpTransformation;
 
+    public bool used = false;
+
+    public void Use()
+    {
+        Destroy(this.gameObject);
+    }
+
+
 }

@@ -105,8 +105,12 @@ public class Control_Movimiento : MonoBehaviour
 
         if (altar != null)
         {
-            transform.GetComponent<PlayerState>().CurrentPower = altar.PowerUP;
-            transform.GetComponent<PlayerState>().Transformation = altar.PowerUpTransformation;
+            if (!altar.used)
+            {
+                transform.GetComponent<PlayerState>().CurrentPower = altar.PowerUP;
+                transform.GetComponent<PlayerState>().Transformation = altar.PowerUpTransformation;
+                altar.Use();
+            }
         }
 
     }
