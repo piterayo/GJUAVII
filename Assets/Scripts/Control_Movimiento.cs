@@ -22,21 +22,23 @@ public class Control_Movimiento : MonoBehaviour {
 
 	void Update() {
 
+		anim.SetFloat ("VSpeed", rigidBody.velocity.y);
+
 		if (!powerUpActivo) {
-			float move = Input.GetAxis("MovimientoHorizontal"+transform.name);
+			float move = Input.GetAxis ("MovimientoHorizontal" + transform.name);
 			anim.SetFloat ("Speed", Mathf.Abs (move));
 
-			if(grounded && Input.GetButton("Salto"+transform.name))
+			if (grounded && Input.GetButton ("Salto" + transform.name))
 				rigidBody.velocity = new Vector2 (rigidBody.velocity.x, AlturaSalto);
 
 			rigidBody.velocity = new Vector2 (move * maxSpeed, rigidBody.velocity.y);
 
 			if (move > 0 && !facingRight)
 				Flip ();
-			else if(move <0 && facingRight)
-				Flip();
-
+			else if (move < 0 && facingRight)
+				Flip ();
 		}
+
 
 		if (GetComponentInChildren<colisionSuelo> ().isGrounded ()) {
 			grounded = true;
@@ -44,6 +46,7 @@ public class Control_Movimiento : MonoBehaviour {
 		} else {
 			grounded = false;
 		}
+		anim.SetBool ("Ground", grounded);
 
 
 		switch (powerUp) {
@@ -75,8 +78,6 @@ public class Control_Movimiento : MonoBehaviour {
 
 		//float move = Input.GetAxis ("Horizontal");
 
-
-	
 	}
 
 
@@ -101,6 +102,8 @@ public class Control_Movimiento : MonoBehaviour {
 				powerUp = Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP ();
 				Collider.gameObject.GetComponent<Control_Altar> ().setPowerUP (temp);
 			}
+
+
 			break;
 		case "Salida":
 			Collider.gameObject.GetComponent<ControlSalida> ().LoadNextLevel ();
