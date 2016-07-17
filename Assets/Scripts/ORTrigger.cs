@@ -4,8 +4,6 @@ using System.Collections;
 public class ORTrigger : Triggerer
 {
 
-    public Triggerer[] triggers;
-
 
     public override void ActionA()
     {

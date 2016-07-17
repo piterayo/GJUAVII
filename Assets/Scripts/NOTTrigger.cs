@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NORTrigger : Triggerer
+public class NOTTrigger : Triggerer
 {
 
 

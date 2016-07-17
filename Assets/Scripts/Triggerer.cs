@@ -14,6 +14,8 @@ public abstract class Triggerer : MonoBehaviour {
 
     public Triggerer[] target;
 
+    public Triggerer[] triggers;
+
     protected TriggerState state = TriggerState.ACTIVE_B;
 
     public TriggerState State
