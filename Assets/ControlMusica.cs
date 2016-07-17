@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ControlMusica : MonoBehaviour {
 
+
 	GameObject sonidoSinLoop, sonidoLoop;
 	bool primerLoop = false;
 
@@ -14,6 +15,9 @@ public class ControlMusica : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		ControlMusicaFondo.tiempoCancion = 0;
+		
 		bool playable = false;
 		bool bajoVol = false;
 
