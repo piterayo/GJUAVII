@@ -4,8 +4,6 @@ using System.Collections;
 public class ANDTrigger : Triggerer
 {
 
-    public Triggerer[] triggers;
-
     public override void ActionA()
     {
         state = TriggerState.ACTIVE_A;
