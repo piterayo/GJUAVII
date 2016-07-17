@@ -4,6 +4,8 @@ using System.Collections;
 
 public class ControlSalida : MonoBehaviour {
 
+    private int playerCount = 0;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -11,7 +13,8 @@ public class ControlSalida : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (playerCount == 2) LoadNextLevel();
+        playerCount = 0;
 	}
 
 	public void LoadNextLevel(){
@@ -24,4 +27,9 @@ public class ControlSalida : MonoBehaviour {
 
 	}
 
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+            playerCount++;
+    }
 }

@@ -12,29 +12,54 @@ public class Button : Triggerer
     //public ButtonState triggerOnState = ButtonState.ON_STATE;
 
     //public ButtonState state = ButtonState.OFF_STATE;
+    public Sprite inactive;
+    public Sprite pushed;
 
+    private SpriteRenderer renderer;
 
-    //public string[] Tags;
+    private ArrayList triggering;
 
-    private int triggerCounter = 0;
+    void Start()
+    {
+        renderer = GetComponent<SpriteRenderer>();
+        triggering = new ArrayList();
+    }
+
+    void Update()
+    {
+        bool change=false;
+        for (int i = 0; i < triggering.Count; i++)
+        {
+            if (!(Transform)(triggering[i]))
+            {
+                triggering.RemoveAt(i);
+                change=true;
+            }
+        }
+        if (triggering.Count == 0 && change)
+        {
+            ActionB();
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        triggerCounter++;
-        if(triggerCounter==1)
+        triggering.Add(other.transform);
+        if(triggering.Count==1)
             ActionA();
     }
 
 
     void OnTriggerExit2D(Collider2D other)
     {
-        triggerCounter--;
-        if(triggerCounter==0)
+        triggering.Remove(other.transform);
+        if(triggering.Count==0)
             ActionB();
     }
 
     public override void ActionA()
     {
+        renderer.sprite = pushed;
         state = TriggerState.ACTIVE_A;
         foreach (Triggerer t in target)
         {
@@ -44,28 +69,11 @@ public class Button : Triggerer
 
     public override void ActionB()
     {
+        renderer.sprite = inactive;
         state = TriggerState.ACTIVE_B;
         foreach (Triggerer t in target)
         {
             t.ActionB();
         }
     }
-
-    //private void switchState(ButtonState new_state){
-    //    state = new_state;
-    //    if (state == triggerOnState)
-    //    {
-    //        foreach (Triggerer t in target)
-    //        {
-    //            t.ActionA();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        foreach (Triggerer t in target)
-    //        {
-    //            t.ActionB();
-    //        }
-    //    }
-    //}
 }

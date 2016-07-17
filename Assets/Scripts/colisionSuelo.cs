@@ -17,12 +17,14 @@ public class colisionSuelo : MonoBehaviour {
 
 	void OnCollisionStay2D(Collision2D colision){
 		grounded = true;
+        transform.parent.GetComponent<Control_Movimiento>().setOnGround(grounded);
 			
 	
 	}
 
 	void OnCollisionExit2D(Collision2D colision){
-		grounded = false;
+        grounded = false;
+        transform.parent.GetComponent<Control_Movimiento>().setOnGround(grounded);
 	}
 
 	public bool isGrounded(){

@@ -1,115 +1,132 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Control_Movimiento : MonoBehaviour {
+public class Control_Movimiento : MonoBehaviour
+{
 
-	public float maxSpeed = 10f;
-	public float AlturaSalto = 10f;
-	public int powerUp = 0; // 0 NO HAY - 1 ROCA - ETC
-	bool powerUpActivo = false;
-	bool facingRight = true;
-	Animator anim;
+    public float maxSpeed = 10f;
+    public float AlturaSalto = 10f;
+    public int powerUp = 0; // 0 NO HAY - 1 ROCA - ETC
+    bool powerUpActivo = false;
+    bool facingRight = true;
 
-	bool grounded = false;
+    bool pushing=false;
 
-	Rigidbody2D rigidBody;
+    private float flyingTime;
+    private float landingTimer;
 
-	// Use this for initialization
-	void Start () {
-		rigidBody = GetComponent<Rigidbody2D> ();
-		anim = GetComponent<Animator> ();
-	}
+    Animator anim;
 
-	void Update() {
+    bool grounded = false;
 
-		anim.SetFloat ("VSpeed", rigidBody.velocity.y);
+    Rigidbody2D rigidBody;
 
-		if (!powerUpActivo) {
-			float move = Input.GetAxis ("MovimientoHorizontal" + transform.name);
-			anim.SetFloat ("Speed", Mathf.Abs (move));
+    // Use this for initialization
+    void Start()
+    {
+        rigidBody = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
 
-			if (grounded && Input.GetButton ("Salto" + transform.name))
-				rigidBody.velocity = new Vector2 (rigidBody.velocity.x, AlturaSalto);
+    void Update()
+    {
+        anim.SetFloat("VSpeed", rigidBody.velocity.y);
 
-			rigidBody.velocity = new Vector2 (move * maxSpeed, rigidBody.velocity.y);
+        if (!powerUpActivo)
+        {
+            float move = Input.GetAxis("MovimientoHorizontal" + transform.name);
+            anim.SetFloat("Speed", Mathf.Abs(move));
 
-			if (move > 0 && !facingRight)
-				Flip ();
-			else if (move < 0 && facingRight)
-				Flip ();
-		}
+            if (grounded && Input.GetButtonDown("Salto" + transform.name))
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, AlturaSalto);
 
+            rigidBody.velocity = new Vector2(move * maxSpeed, rigidBody.velocity.y);
 
-		if (GetComponentInChildren<colisionSuelo> ().isGrounded ()) {
-			grounded = true;
+            if (move > 0 && !facingRight)
+                Flip();
+            else if (move < 0 && facingRight)
+                Flip();
+        }
 
-		} else {
-			grounded = false;
-		}
-		anim.SetBool ("Ground", grounded);
+        if (!grounded)
+        {
+            flyingTime += Time.deltaTime;
+            anim.SetFloat("AirTime", flyingTime);
 
+        }
+        //if (GetComponentInChildren<colisionSuelo> ().isGrounded ()) {
+        //    grounded = true;
 
-		switch (powerUp) {
-		case 0: // no llevo nada
-			GetComponentInChildren<Control_Skill>().disableAll();
+        //} else {
+        //    grounded = false;
+        //}
+        //anim.SetBool ("Ground", grounded);
 
-			break;
-		case 1: // Lleva DA ROCK
-			if (Input.GetButtonDown ("Skill" + transform.name)) {
-				if (!powerUpActivo) {
-					
-					GetComponentInChildren<Control_Skill> ().enableAll ();
-					powerUpActivo = true;
+    }
 
-				} else {
-					GetComponentInChildren<Control_Skill> ().disableAll ();
-					powerUpActivo = false;
-				}
-			}
-			break;
+    void FixedUpdate()
+    {
 
-		}
+        //float move = Input.GetAxis ("Horizontal");
 
+    }
 
-
-	}
-
-	void FixedUpdate () {
-
-		//float move = Input.GetAxis ("Horizontal");
-
-	}
+    public void setOnGround(bool g)
+    {
+        grounded = g;
+        anim.SetBool("Ground", grounded);
+        if (!grounded) flyingTime = 0.0f;
+    }
 
 
-	void Flip()
-	{
-		facingRight = !facingRight;
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
-	}
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
 
-	void OnTriggerEnter2D(Collider2D Collider)
-	{
+    void OnTriggerEnter2D(Collider2D other)
+    {
 
+        Control_Altar altar = other.GetComponent<Control_Altar>();
 
-		switch(Collider.transform.name) {
-		case "Altar":
-			print ("LOL");
+        if (altar != null)
+        {
+            transform.GetComponent<PlayerState>().CurrentPower = altar.PowerUP;
+            transform.GetComponent<PlayerState>().Transformation = altar.PowerUpTransformation;
+        }
 
-			if (Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP () != 0) {
-				int temp = powerUp;
-				powerUp = Collider.gameObject.GetComponent<Control_Altar> ().getPowerUP ();
-				Collider.gameObject.GetComponent<Control_Altar> ().setPowerUP (temp);
-			}
+    }
 
+    void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.transform.tag == "Pushable")
+        {
+            if (facingRight && (other.transform.position.x > transform.position.x) && rigidBody.velocity.x != 0)
+            {
+                pushing = true;
+            }
+            else if (!facingRight && (other.transform.position.x < transform.position.x) && rigidBody.velocity.x != 0)
+            {
+                pushing = true;
+            }
+            else
+            {
+                pushing = false;
+            }
+            anim.SetBool("Pushing", pushing);
+        }
+    }
 
-			break;
-		case "Salida":
-			Collider.gameObject.GetComponent<ControlSalida> ().LoadNextLevel ();
-			break;
-		}
-	}
-
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.transform.tag == "Pushable")
+        {
+            pushing = false;
+        }
+        anim.SetBool("Pushing", pushing);
+    }
 
 }
