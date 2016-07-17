@@ -40,6 +40,10 @@ public class Control_Movimiento : MonoBehaviour
             anim.SetFloat("Speed", Mathf.Abs(move));
 
 			if (move != 0) {
+				
+
+
+
 
 			}
 
