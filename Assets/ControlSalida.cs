@@ -19,11 +19,13 @@ public class ControlSalida : MonoBehaviour {
 
 	public void LoadNextLevel(){
 
-		int numero = SceneManager.GetActiveScene ().buildIndex;
-		print ("cargo " + numero);
+		int numero = SceneManager.GetActiveScene ().buildIndex +1;
+
+		if (numero == 4)
+			numero = 0;
 
 		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
-		SceneManager.LoadScene (numero+1);
+		SceneManager.LoadScene (numero);
 
 	}
 

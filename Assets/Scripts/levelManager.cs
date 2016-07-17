@@ -33,6 +33,11 @@ public class levelManager : MonoBehaviour {
 				gameObject.transform.FindChild ("CanvasPausa").GetComponent<Controller_Pause> ().enableAll ();
 		}
 
+		if (Input.GetButtonDown ("Back")) {
+			restartLevel ();
+
+		}
+
 		if (Input.GetButtonDown ("Salto1") || Input.GetButtonDown ("Salto2")) {
 
 			if (gameObject.transform.FindChild ("CanvasPausa").GetComponent<Controller_Pause> ().getPaused ()) {
@@ -42,4 +47,12 @@ public class levelManager : MonoBehaviour {
 		}
 	}
 
+	public void restartLevel()
+	{
+		int aux = SceneManager.GetActiveScene ().buildIndex;
+		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
+		SceneManager.LoadScene (aux);
+	}
 }
+
+

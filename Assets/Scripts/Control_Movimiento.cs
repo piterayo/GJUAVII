@@ -9,6 +9,8 @@ public class Control_Movimiento : MonoBehaviour
     public int powerUp = 0; // 0 NO HAY - 1 ROCA - ETC
     bool powerUpActivo = false;
     bool facingRight = true;
+	public AudioClip paso;
+	Time timerPasos;
 
     bool pushing=false;
 
@@ -36,6 +38,11 @@ public class Control_Movimiento : MonoBehaviour
         {
             float move = Input.GetAxis("MovimientoHorizontal" + transform.name);
             anim.SetFloat("Speed", Mathf.Abs(move));
+
+			if (move != 0) {
+
+			}
+
 
             if (grounded && Input.GetButtonDown("Salto" + transform.name))
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, AlturaSalto);
