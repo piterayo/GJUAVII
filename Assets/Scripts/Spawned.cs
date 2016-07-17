@@ -7,7 +7,16 @@ public class Spawned : MonoBehaviour {
 
     public void Die()
     {
-        spawner.Spawn();
+        if (transform.tag == "Player")
+        {
+            Destroy(this.gameObject);
+            Instantiate(Resources.Load("Prefabs/DeadBody"));
+            GameObject.Find("levelManager").GetComponent<levelManager>();
+        }
+        else
+        {
+            spawner.Spawn();
+        }
     }
 
 }
