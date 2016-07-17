@@ -9,9 +9,10 @@ public class Spawned : MonoBehaviour {
     {
         if (transform.tag == "Player")
         {
+            GameObject dead = Instantiate(Resources.Load("Prefabs/DeadBody")) as GameObject;
+            dead.transform.position = this.transform.position;
             Destroy(this.gameObject);
-            Instantiate(Resources.Load("Prefabs/DeadBody"));
-            GameObject.Find("levelManager").GetComponent<levelManager>();
+            GameObject.Find("levelController").GetComponent<levelManager>().startRestartTimer();
         }
         else
         {

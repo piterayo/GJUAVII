@@ -8,7 +8,9 @@ public class levelManager : MonoBehaviour {
 	public GameObject 	prefabPersonaje;
 		   Object 		personaje1, 		personaje2;
 
-	
+
+           private float restartTimer;
+
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +25,16 @@ public class levelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+        if (restartTimer > 0.0f)
+        {
+            restartTimer -= Time.deltaTime;
+            if (restartTimer <= 0.0f)
+            {
+                restartLevel();
+            }
+        }
+
 		if (Input.GetButtonDown ("Pause")) {
 			if (gameObject.transform.FindChild ("CanvasPausa").GetComponent<Controller_Pause> ().getPaused ()) {
 				SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);
@@ -46,6 +57,11 @@ public class levelManager : MonoBehaviour {
 			}
 		}
 	}
+
+    public void startRestartTimer()
+    {
+        restartTimer = 4.0f;
+    }
 
 	public void restartLevel()
 	{
