@@ -13,9 +13,9 @@ public class mainMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-		quitMenu = quitMenu.GetComponent<Canvas> ();
-		TextoJugar = TextoJugar.GetComponent<Button> ();
-		TetoSalir = TetoSalir.GetComponent<Button> ();
+        //quitMenu = quitMenu.GetComponent<Canvas> ();
+		//TextoJugar = TextoJugar.GetComponent<Button> ();
+        //TetoSalir = TetoSalir.GetComponent<Button> ();
 		quitMenu.enabled = false;
 
 
