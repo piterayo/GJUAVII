@@ -21,7 +21,7 @@ public class ControlSalida : MonoBehaviour {
 
 		int numero = SceneManager.GetActiveScene ().buildIndex +1;
 
-		if (numero == 4)
+		if (numero == 5)
 			numero = 0;
 
 		SceneManager.UnloadScene (SceneManager.GetActiveScene().buildIndex);

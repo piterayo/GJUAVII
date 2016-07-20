@@ -18,8 +18,22 @@ public class mainMenu : MonoBehaviour {
         //TetoSalir = TetoSalir.GetComponent<Button> ();
 		quitMenu.enabled = false;
 
+        
+
 
 	}
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Salto1"))
+        {
+            StartGame();
+        }
+        else if (Input.GetButtonDown("Pause"))
+        {
+            ExitGame();
+        }
+    }
 
 	public void openQuitMenu(){
 		quitMenu.enabled = true;
